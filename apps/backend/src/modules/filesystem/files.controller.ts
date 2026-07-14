@@ -12,7 +12,7 @@ export const getFile = async (req : Request , res : Response ) =>{
 
 export const writefile = async(req : Request , res : Response ) =>{
     const { id } = req.params ;
-    const {path } = req.query ;
+    const { path } = req.query ;
     const {content } = req.body;
     const result =  await writeFile(id as string , path as string , content as string )
     res.json(result)

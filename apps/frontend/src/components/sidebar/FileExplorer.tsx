@@ -17,6 +17,7 @@ interface props {
 function FileExplorer({ workspaceId, setSelectedFile }: props) {
     const [files, setFiles] = useState<fileNode[]>([]);
     const [folderOpen , setFolderOpen ] = useState<boolean>(false)
+    
     const updateTree = (
         nodes: fileNode[],
         targetPath: string,
@@ -40,7 +41,6 @@ function FileExplorer({ workspaceId, setSelectedFile }: props) {
                     ),
                 };
             }
-
             return node;
         });
     };
@@ -49,7 +49,6 @@ function FileExplorer({ workspaceId, setSelectedFile }: props) {
         setFolderOpen(t => !t) ;
         const data = await getFiles(workspaceId, file.path);
         const updatedTree = updateTree(files, file.path, data)
-        console.log("Updated Tree:", JSON.stringify(updatedTree, null, 2));
         setFiles(updatedTree)
     };
 
@@ -57,7 +56,6 @@ function FileExplorer({ workspaceId, setSelectedFile }: props) {
         const data = await getFiles("3c290fe1-d42d-412b-bd7c-6b32da1f9ddb" as string, "");
         setFiles(data);
     };
-
 
     useEffect(() => {
         loadFiles();
