@@ -17,7 +17,7 @@ export const startWorkspace = async (
     req: Request, res: Response
 ) => {
     const { id } = req.params;
-    console.log(id)
+    
     await startContainer(id as string);
     res.json({
         message: "Workspace started"
@@ -25,7 +25,6 @@ export const startWorkspace = async (
 }
 export const installDependencies = async (req: Request, res: Response) => {
     const { id } = req.params;
-    console.log("the id is " ,id)
     const result = await execCommand(id as string, [
         "npm",
         "install"

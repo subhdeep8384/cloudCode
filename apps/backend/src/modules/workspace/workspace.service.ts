@@ -6,15 +6,13 @@ import { copyDirectory } from "../../utils/file.utils.js";
 
 export const createWorkspaceService = (data: CreateWorkspaceInput) => {
   try{
-
     const id = crypto.randomUUID() ;
-    console.log(process.cwd())
     const workspacePath = path.join(process.cwd() , "../../storage/workspace" , id) ;
     
     fs.mkdirSync(workspacePath , {
       recursive : true 
     })
-    console.log("folder make")
+  
     const templatePath = path.join(
       process.cwd() , "../../templates", data.type
     )
@@ -33,11 +31,11 @@ export const createWorkspaceService = (data: CreateWorkspaceInput) => {
     )
     return {
       id , 
-    name : data.name ,
-    type : data.type ,
-    path : workspacePath ,
-    status : "created" 
-  };
+      name : data.name ,
+      type : data.type ,
+      path : workspacePath ,
+      status : "created" 
+    };
 }catch(e){
   console.log(e)
 }

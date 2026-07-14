@@ -4,8 +4,8 @@ import { createWorkspace, getWorkspaces, installDependencies, runWorkspace, star
 import { createWorkspaceSchema } from "./workspace.schema.js";
 const router :Router = Router() ;
 
-router.post("/", validate(createWorkspaceSchema)  , createWorkspace)
 router.get("/" , getWorkspaces)
+router.post("/", validate(createWorkspaceSchema)  , createWorkspace)
 router.post("/:id/start" , startWorkspace );
 router.post("/:id/install" , installDependencies );
 router.post("/:id/run" , runWorkspace );

@@ -19,7 +19,7 @@ export const startContainer = async (workspaceId: string) => {
     const existingContainer = await getContainer(workspaceId);
     if (existingContainer) {
       const info = await existingContainer.inspect();
-      if (!info.State.Running) {
+      if (!info.State.Running) {1
         await existingContainer.start();
       }
       return existingContainer.id;
@@ -64,7 +64,6 @@ export const execCommand = async (
   command: string[]
 ): Promise<ExecResult> => {
   try {
-
     const container = await getContainer(workspaceId);
 
     if (!container) {
