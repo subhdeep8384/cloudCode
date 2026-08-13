@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 
 import axios from "axios";
-import HeroTerminal from "../components/HeroTerminal";
-import LoginModal from "../components/LoginModal";
-import AuthArea from "../components/AuthArea";
+import HeroTerminal from "../components/landingPageComponents/HeroTerminal";
+import LoginModal from "../components/landingPageComponents/LoginModal";
+import AuthArea from "../components/landingPageComponents/AuthArea";
 import { FEATURES, RUNTIMES, STEPS } from "../contants/featureSet";
-
-
-
+import {  useNavigate } from "react-router-dom";
 
 const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
@@ -15,6 +13,7 @@ export default function LandingPage() {
   const [authStatus, setAuthStatus] = useState("checking");
   const [email, setEmail] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate() ;
 
   useEffect(() => {
     let cancelled = false;
@@ -22,8 +21,10 @@ export default function LandingPage() {
     async function checkSession() {
       try {
         const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/auth/me`, { withCredentials: true });
+
         if (cancelled) return;
         if (res.data?.user) {
+          localStorage.setItem("user" , res.data.user.id)
           setEmail(res.data.user.email || "");
           setAuthStatus("in");
         } else {
@@ -60,7 +61,7 @@ export default function LandingPage() {
     if (authStatus !== "in") {
       setModalOpen(true);
     } else {
-      alert("Creating a new workspace… (demo)");
+      navigate("/dashboard")
     }
   }
 

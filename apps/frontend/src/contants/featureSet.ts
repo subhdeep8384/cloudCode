@@ -17,7 +17,7 @@ export  const FEATURES = [
   },
 ];
 
-import { Terminal, Check, X, Triangle, Atom, Hexagon, Coffee, Cpu } from "lucide-react";
+import { Terminal, Triangle, Atom, Hexagon, Coffee, Cpu } from "lucide-react";
 
 export const RUNTIMES = [
   { name: "Next.js", icon: Triangle },

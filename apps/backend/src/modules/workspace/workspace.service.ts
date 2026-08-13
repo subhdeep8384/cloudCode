@@ -1,12 +1,11 @@
 import fs, { stat } from "fs" ;
 import path from "path"
 import crypto from "crypto"
-import {type CreateWorkspaceInput } from "./workspace.schema.js";
+import {type getWorkspace, type CreateWorkspaceInput ,type User} from "./workspace.schema.js";
 import { copyDirectory } from "../../utils/file.utils.js";
 
-export const createWorkspaceService = (data: CreateWorkspaceInput) => {
+export const createWorkspaceService = (data: CreateWorkspaceInput , user : User) => {
   try{
-    const userId = data.userId ;
     const id = crypto.randomUUID() ;
     const workspacePath = path.join(process.cwd() , "../../storage/workspace" , id) ;
     
@@ -21,6 +20,7 @@ export const createWorkspaceService = (data: CreateWorkspaceInput) => {
     
     const workspaceMetaData = {
       id ,
+      userId : user.id ,
       name : data.name ,
       type : data.type ,
       createdAt : new Date() 
@@ -41,20 +41,25 @@ export const createWorkspaceService = (data: CreateWorkspaceInput) => {
   console.log(e)
 }
 };
-export const getWorkspacesService =() =>{
-    const workspacesPath = path.join(process.cwd() , "../../storage/workspace") ; 
-    console.log("the path is " ,workspacesPath)
-    const folders = fs.readdirSync(workspacesPath) ;
-    console.log("teh folders are" ,folders)
 
+
+
+export const getWorkspacesService = (user : User ) =>{
+    const workspacesPath = path.join(process.cwd() , "../../storage/workspace") ; 
+    const folders = fs.readdirSync(workspacesPath) ;
+    
+    const userId = user.id ;
     const workspaces = folders.map((folder) =>{
       const workspaceFile = path.join(
-        workspacesPath , folder , "package.json"
+        workspacesPath , folder , "workspace.json"
       )
       const data = fs.readFileSync(
         workspaceFile , "utf-8"
       )
       return JSON.parse(data) ;
-    }) ;
+    }).filter((workspace) => workspace.userId === userId)
+  .map(({ userId, ...workspace }) => workspace);
+
+
     return workspaces ;
 }

@@ -4,12 +4,13 @@ import { execBackground, execCommand, startContainer } from "../sandbox/sandbox.
 
 
 export const createWorkspace = (req: Request, res: Response) => {
-    const result = createWorkspaceService(req.body);
+    const result = createWorkspaceService(req.body , req.user);
     res.status(201).json(result);
 };
 
-export const getWorkspaces = (req: Request, res: Response) => {
-    const workspaces = getWorkspacesService();
+export const getAllWorkspaces = (req: Request, res: Response) => {
+
+    const workspaces = getWorkspacesService(req.user);
     res.json(workspaces)
 }
 
