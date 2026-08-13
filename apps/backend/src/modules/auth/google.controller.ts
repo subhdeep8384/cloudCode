@@ -8,7 +8,7 @@ import {
 } from "openid-client";
 
 export async function googleController(req: Request, res: Response) {
-   const state = randomBytes(32).toString("hex");
+  const state = randomBytes(32).toString("hex");
 
   const codeVerifier = randomPKCECodeVerifier();
   const codeChallenge = await calculatePKCECodeChallenge(codeVerifier);
@@ -35,5 +35,4 @@ export async function googleController(req: Request, res: Response) {
   });
 
   res.redirect(url.href);
-
 }

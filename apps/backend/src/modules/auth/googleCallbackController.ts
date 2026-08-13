@@ -97,7 +97,7 @@ export async function googleCallbackController(req: Request, res: Response) {
 
     res.clearCookie("oauth_state");
     res.clearCookie("oauth_code_verifier");
-    return res.redirect(process.env.BASE_URL!);
+    return res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
 
   } catch (error) {
     console.error(error);
