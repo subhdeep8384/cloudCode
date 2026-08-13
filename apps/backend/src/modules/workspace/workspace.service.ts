@@ -6,6 +6,7 @@ import { copyDirectory } from "../../utils/file.utils.js";
 
 export const createWorkspaceService = (data: CreateWorkspaceInput) => {
   try{
+    const userId = data.userId ;
     const id = crypto.randomUUID() ;
     const workspacePath = path.join(process.cwd() , "../../storage/workspace" , id) ;
     
@@ -42,10 +43,13 @@ export const createWorkspaceService = (data: CreateWorkspaceInput) => {
 };
 export const getWorkspacesService =() =>{
     const workspacesPath = path.join(process.cwd() , "../../storage/workspace") ; 
+    console.log("the path is " ,workspacesPath)
     const folders = fs.readdirSync(workspacesPath) ;
+    console.log("teh folders are" ,folders)
+
     const workspaces = folders.map((folder) =>{
       const workspaceFile = path.join(
-        workspacesPath , folder , "workspace.json"
+        workspacesPath , folder , "package.json"
       )
       const data = fs.readFileSync(
         workspaceFile , "utf-8"
