@@ -11,7 +11,6 @@ interface Props {
 }
 
 function TemplateCard({ template, selected, onSelect }: Props) {
-    const Icon = template.icon;
     return (
         <button
             onClick={onSelect}

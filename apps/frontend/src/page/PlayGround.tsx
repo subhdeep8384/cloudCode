@@ -4,17 +4,18 @@ import type { fileNode } from "../components/sidebar/FileItems"
 import { CodeEditor } from "../components/codeeditor/CodeEditor"
 import { getdata } from "../api/files/getFiles"
 import { saveFile } from "../api/files/saveFile"
+import { useParams } from "react-router-dom"
 
 function PlayGround() {
   const [selectedFile, setSelectedFile] = useState<fileNode | null>(null)
   const [content, setContent] = useState("")
-  const workspaceId = "3c290fe1-d42d-412b-bd7c-6b32da1f9ddb";
+  const { workspaceId } = useParams();
 
   const handlekeydown = async (e: globalThis.KeyboardEvent) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") {
       e.preventDefault();
       console.log("content", content)
-      const data = await saveFile(content as string, workspaceId, selectedFile!.path as string);
+      const data = await saveFile(content as string, workspaceId!, selectedFile!.path as string);
       console.log(data)
     }
   }
@@ -24,7 +25,7 @@ function PlayGround() {
       if (!selectedFile) return;
 
       const data = await getdata(
-        workspaceId,
+        workspaceId!,
         selectedFile.path
       );
 
@@ -41,7 +42,7 @@ function PlayGround() {
       {openFileExplorer && 
       <div className="w-1/5 border-r">
          <FileExplorer
-          workspaceId={workspaceId}
+          workspaceId={workspaceId!}
           setSelectedFile={setSelectedFile}
         />
       </div>

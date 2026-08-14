@@ -6,6 +6,12 @@ import "dotenv/config";
 import cors from "cors"
 import cookieParser from "cookie-parser";
 
+
+
+// /me and authnticate mai cookie hard code hua hai 
+
+
+
 const app = express() ;
 
 app.use(express.json())
@@ -29,6 +35,7 @@ app.use("/api/workspace" , workSpaceRouter) ;
 app.use("/api/file" , fileRouter ) ;
 
 const port = process.env.PORT || 3000 ;
+
 app.listen(port , ()=>{
     console.log("Server is running " , port )
 })

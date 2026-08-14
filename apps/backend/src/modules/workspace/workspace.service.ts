@@ -42,8 +42,6 @@ export const createWorkspaceService = (data: CreateWorkspaceInput , user : User)
 }
 };
 
-
-
 export const getWorkspacesService = (user : User ) =>{
     const workspacesPath = path.join(process.cwd() , "../../storage/workspace") ; 
     const folders = fs.readdirSync(workspacesPath) ;
@@ -58,7 +56,7 @@ export const getWorkspacesService = (user : User ) =>{
       )
       return JSON.parse(data) ;
     }).filter((workspace) => workspace.userId === userId)
-  .map(({ userId, ...workspace }) => workspace);
+    .map(({ userId, ...workspace }) => workspace);
 
 
     return workspaces ;
