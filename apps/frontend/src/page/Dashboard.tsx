@@ -13,7 +13,7 @@ export default function Dashboard() {
     type: string
   }[]>([]);
   const [showModal, setShowModal] = useState(false);
-
+  const [reload , setReload ] = useState<boolean>(true);
   useEffect(() => {
     const fetchAllProject = async () => {
       const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/workspace`, {
@@ -23,13 +23,20 @@ export default function Dashboard() {
     }
     fetchAllProject();
   }, [])
+    useEffect(() => {
+    const fetchAllProject = async () => {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/workspace`, {
+        withCredentials: true
+      });
+      setProjects(res.data)
+    }
+    fetchAllProject();
+  }, [reload])
 
 
 
   const running = 1
-  const handleCreate = () => {
-
-  }
+  
   return (
     <div className="min-h-screen bg-black font-sans">
       <div className="max-w-6xl mx-auto px-6 py-8 sm:px-10">
@@ -60,7 +67,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {showModal && <CreateProjectModal onClose={() => setShowModal(false)} onCreate={handleCreate} />}
+      {showModal && <CreateProjectModal onClose={() => setShowModal(false)} setShowModal={setShowModal} setReload={setReload}/>}
     </div>
   );
 }

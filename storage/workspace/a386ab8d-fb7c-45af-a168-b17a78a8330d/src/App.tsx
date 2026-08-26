@@ -9,7 +9,6 @@ function App() {
 
   return (
     <>
-    hello
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
@@ -27,11 +26,11 @@ function App() {
           className="counter"
           onClick={() => setCount((count) => count + 1)}
         >
-          Count is {count}
+          Count is {count} 
         </button>
       </section>
 
-      <div className="ticks"></div>
+      <div className="ticks"> hellooeojof</div>
 
       <section id="next-steps">
         <div id="docs">

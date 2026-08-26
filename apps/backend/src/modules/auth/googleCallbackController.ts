@@ -76,7 +76,7 @@ export async function googleCallbackController(req: Request, res: Response) {
         picture : true 
       }
     })
-
+    console.log("user is :"  ,user )
     const sessionToken = generateSessionToken() ;
     const tokenHash = hashSessionToken(sessionToken) ;
 

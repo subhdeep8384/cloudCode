@@ -1,6 +1,6 @@
 import { type Request, type Response } from "express";
 import { createWorkspaceService, getWorkspacesService } from "./workspace.service.js";
-import { execBackground, execCommand, getContainer, startContainer } from "../sandbox/sandbox.service.js";
+import { execBackground, execCommand, getContainer, startContainer } from "@repo/docker";
 
 
 export const createWorkspace = (req: Request, res: Response) => {

@@ -1,19 +1,41 @@
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { TEMPLATES } from "../../contants/templates";
 import TemplateCard from "./TemplateCard";
-import { X } from "lucide-react";
+import { Loader, X } from "lucide-react";
+import axios from "axios";
 
 interface Props {
     onClose : () => void 
-    onCreate : ({}) => void 
+    setShowModal : Dispatch<SetStateAction<boolean>>
+    setReload : Dispatch<SetStateAction<boolean>>
 }
 
-function CreateProjectModal({ onClose, onCreate } : Props) {
-  const [selectedTemplate, setSelectedTemplate] = useState("");
+type ProjectType = "react"| "next" | "node" | "express" 
+
+
+function CreateProjectModal({ onClose , setShowModal , setReload} : Props) {
+  const [selectedTemplate, setSelectedTemplate] = useState<ProjectType>("react");
   const [name, setName] = useState("");
-
-  const canCreate = selectedTemplate && name.trim().length > 0;
-
+  const [canCreate , setCanCreate ] = useState<boolean>(true) ;
+  const [loading , setLoading ] = useState<boolean>(false) ;
+  const onCreate = async () =>{
+    setLoading(true)
+    try{
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/workspace`, {
+        name : name ,
+        type : selectedTemplate
+      } , {
+        withCredentials : true 
+      })
+      setShowModal(false)
+    }catch(e){
+      console.log(e)
+    }finally{
+      setLoading(false);
+      setReload(t => !t) ;
+    }
+  }
+  
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
       <div className="bg-gray-900 border border-gray-800 rounded-lg w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-2xl">
@@ -43,7 +65,7 @@ function CreateProjectModal({ onClose, onCreate } : Props) {
                 key={t.name}
                 template={t}
                 selected={selectedTemplate === t.name}
-                onSelect={() => setSelectedTemplate(t.name)}
+                onSelect={() => setSelectedTemplate(t.name as ProjectType)}
               />
             ))}
           </div>
@@ -58,10 +80,10 @@ function CreateProjectModal({ onClose, onCreate } : Props) {
           </button>
           <button
             disabled={!canCreate}
-            onClick={() => canCreate && onCreate({ name: name.trim(), template: selectedTemplate })}
+            onClick={() => canCreate && onCreate()}
             className="font-mono text-sm font-semibold text-black px-4 py-2 rounded-md bg-teal-300 hover:bg-teal-200 disabled:bg-gray-800 disabled:text-gray-600 disabled:cursor-not-allowed transition-colors"
           >
-            Create project
+            {loading  ? <Loader/> : "Create project"}
           </button>
         </div>
       </div>

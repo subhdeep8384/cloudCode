@@ -5,8 +5,7 @@ import { prisma } from "@repo/database/prisma";
 
 
 export async function authenticate(req : Request , res : Response , next : NextFunction ){
-    const sessionToken = "aca90c9d591a21cf9ad2785f243e4d44fd26bd8b73701be0d4d7914dae6cf1a7" ;
-
+    const sessionToken = req.cookies.session ;
     if(!sessionToken )return res.status(401).json({
         message : "Authencation required"
     })
@@ -40,7 +39,7 @@ export async function authenticate(req : Request , res : Response , next : NextF
         message: "Session expired",
       });
     }
-    console.log(req.body)
+    // console.log(req.body)
     req.user = session.user ;
 
     next() ;

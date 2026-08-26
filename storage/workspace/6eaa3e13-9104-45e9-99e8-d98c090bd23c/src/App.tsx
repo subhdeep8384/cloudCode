@@ -9,7 +9,7 @@ function App() {
 
   return (
     <>
-      ma ki chut helo chut  chuaduyasgifgo
+      subhdeep pal jgigu
     </>
   )
 }

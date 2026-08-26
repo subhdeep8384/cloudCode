@@ -4,7 +4,7 @@ import { prisma } from "@repo/database/prisma";
 import { json } from "zod";
 export async function meController(req : Request , res : Response ){
     try{
-        const sessionToken = "aca90c9d591a21cf9ad2785f243e4d44fd26bd8b73701be0d4d7914dae6cf1a7" ;
+        const sessionToken = req.cookies.session ;
         if(!sessionToken ){
             return res.status(401).json({
                 message : "Not authencated",

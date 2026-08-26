@@ -53,7 +53,7 @@ function FileExplorer({ workspaceId, setSelectedFile }: props) {
     };
 
     const loadFiles = async () => {
-        const data = await getFiles("010dc079-22e0-4ef0-b73c-58427ef56f91" as string, "");
+        const data = await getFiles(workspaceId as string, "");
         setFiles(data);
     };
 
