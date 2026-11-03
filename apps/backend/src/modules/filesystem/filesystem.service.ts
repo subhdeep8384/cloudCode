@@ -13,7 +13,6 @@ export const listFiles = async (
         "../../storage/workspace" ,
         workspaceId
     )
-    console.log("\n\n\n\n\n\n\n\n\n")
     console.log(workspaceRoot)
 
     const currentPath = path.join(
@@ -69,6 +68,18 @@ export const writeFile = async (
             content ,
             "utf-8"
         )
+        // change the metadata to dirty again for the worker
+        const workspacePath = path.join(getWorkspacePath(workspaceId));
+        const metadataPath = path.join(workspacePath, "workspace.json");
+        const metadata = JSON.parse(
+            await fs.readFile(metadataPath, "utf-8")
+        );
+        metadata.isDirty = true;
+        await fs.writeFile(
+            metadataPath,
+            JSON.stringify(metadata, null, 2),
+            "utf-8"
+        );
         return {
             success : true 
         }

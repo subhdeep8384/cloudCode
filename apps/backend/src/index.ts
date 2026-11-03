@@ -5,13 +5,6 @@ import authRouter from "./modules/auth/auth.routes.js"
 import "dotenv/config";
 import cors from "cors"
 import cookieParser from "cookie-parser";
-
-
-
-// /me and authnticate mai cookie hard code hua hai 
-
-
-
 const app = express() ;
 
 app.use(express.json())

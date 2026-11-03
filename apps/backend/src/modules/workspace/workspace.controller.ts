@@ -1,6 +1,7 @@
 import { type Request, type Response } from "express";
-import { createWorkspaceService, getWorkspacesService } from "./workspace.service.js";
+import { createWorkspaceService, getWorkspacesService, syncObjectStore } from "./workspace.service.js";
 import { execBackground, execCommand, getContainer, startContainer } from "@repo/docker";
+import path from "path";
 
 
 export const createWorkspace = (req: Request, res: Response) => {
@@ -37,6 +38,7 @@ export const runWorkspace = async (
     req: Request, res: Response
 ) => {
     const { id } = req.params;
+    console.log("run work space called")
     await execBackground(id as string, [
         "npm",
         "run",
@@ -70,4 +72,9 @@ export const deleteContainer = async (req : Request , res : Response)=>{
     res.status(401).json({
         message : "Something went wrong"
     })
+}
+
+export const syncObjectStoreWithWorkspace = async (req : Request  , res : Response ) => {
+    const result = await syncObjectStore() ;   
+    res.send(result)
 }

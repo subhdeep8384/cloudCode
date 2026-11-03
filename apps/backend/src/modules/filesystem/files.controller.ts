@@ -15,6 +15,7 @@ export const writefile = async(req : Request , res : Response ) =>{
     const { path } = req.query ;
     const {content } = req.body;
     const result =  await writeFile(id as string , path as string , content as string )
+    
     res.json(result)
 } 
 export const listfile = async(req : Request , res : Response ) =>{
